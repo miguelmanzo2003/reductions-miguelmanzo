@@ -10,9 +10,13 @@ sum_array(int N, int A[])
    // input consists of an integer N and an array A[] of size N
    // your job: write code to compute the sum of all values in A[]
    // and return that sum to the caller
+   int sum = 0;
 
+   for(int i = 0; i < N; i++){
+      sum += A[i];
+   }
    // Put your code here, return the correct result
-   return 0;
+   return sum;
 }
 
 

@@ -1,3 +1,7 @@
+#include <omp.h>
+#include <cstddef>
+
+
 const char* dgemv_desc = "Vectorized implementation of matrix-vector multiply.";
 
 /*
@@ -7,20 +11,20 @@ const char* dgemv_desc = "Vectorized implementation of matrix-vector multiply.";
  * On exit, A and X maintain their input values.
  */
 void my_dgemv(int n, double* A, double* x, double* y) {
-   // insert your code here: implementation of vectorized vector-matrix multiply
-    const double* __restrict a  = A;
-    const double* __restrict xv = x;
-    double* __restrict yv       = y;
 
+    #pragma omp parallel for schedule(static)
     for (int i = 0; i < n; ++i) {
-        double s = 0.0;
-        const double* __restrict Ai = a + (long)i * n;
+        const double* Ai = A + static_cast<std::size_t>(i) * n;
 
-        // Inner dot-product reduction across the row: vectorizes
-        #pragma omp simd reduction(+:s)
+        double sum = 0.0;
+
+        // Vectorize the inner dot product for better CPU throughput
+        #pragma omp simd reduction(+:sum)
         for (int j = 0; j < n; ++j) {
-            s += Ai[j] * xv[j];
+            sum += Ai[j] * x[j];
         }
-        yv[i] += s;  // Y := A*X + Y
+
+        // Y := A*X + Y
+        y[i] += sum;
     }
 }

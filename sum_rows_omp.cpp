@@ -18,6 +18,16 @@ sum_rows(int N, int A[], int y[])
    // your job: write code that will for each row i in A, sum all the values 
    // all N coluimns of row row A[i,*] and place the sum into y[i]
 
+   #pragma omp parallel for
+   for(int i = 0; i < N; i++){
+      int sumOfARow = 0;
+      for(int j = 0; j< N; j++){
+
+         sumOfARow += A[i * N + j];
+      }
+      y[i] = sumOfARow;
+   }
+
    // Put your code here, return the correct result
 }
 
@@ -53,6 +63,14 @@ int main(int ac, char*av[])
       printf(" %d ", y[indx++]);
    }
    printf("\n");
+
+   int nthreads = 1;
+   #pragma omp parallel
+   {
+      #pragma omp single
+      nthreads = omp_get_num_threads();
+   }
+    printf("OpenMP reports %d thread(s)\n", nthreads);
 
    sum_rows(N, A, y);
 

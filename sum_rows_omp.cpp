@@ -74,6 +74,11 @@ int main(int ac, char*av[])
 
    sum_rows(N, A, y);
 
+   printf(" Contents of y[] after sum_rows:\n");
+   for (int i=0; i<N; ++i) printf(" %d", y[i]);
+   printf("\n");
+
+
    // now do verification check
    int t=y[0], err=0, i;
    for (i=1; err == 0 && i<N ; i++)

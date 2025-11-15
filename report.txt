@@ -1,0 +1,10 @@
+dgemv-vectorized.cpp:15:23: missed: couldn't vectorize loop
+dgemv-vectorized.cpp:22:22: missed: not vectorized: complicated access pattern.
+dgemv-vectorized.cpp:21:27: optimized: loop vectorized using 16 byte vectors
+dgemv-vectorized.cpp:9:6: note: vectorized 1 loops in function.
+dgemv-vectorized.cpp:9:6: note: ***** Analysis failed with vector mode V2DF
+dgemv-vectorized.cpp:9:6: note: ***** The result for vector mode V16QI would be the same
+dgemv-vectorized.cpp:9:6: note: ***** Re-trying analysis with vector mode V8QI
+dgemv-vectorized.cpp:9:6: note: ***** Analysis failed with vector mode V8QI
+dgemv-vectorized.cpp:9:6: note: ***** Re-trying analysis with vector mode V4QI
+dgemv-vectorized.cpp:9:6: note: ***** Analysis failed with vector mode V4QI
